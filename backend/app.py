@@ -18,8 +18,8 @@ mysql = MySQL(app)
 
 @app.route('/register', methods = ['GET', 'POST'])
 def Register():
-    cursor = mysql.connection.cursor()
     if request.method == "POST":
+        cursor = mysql.connection.cursor()
         data = request.get_data().decode("UTF-8")
         user = ast.literal_eval(data)
 
