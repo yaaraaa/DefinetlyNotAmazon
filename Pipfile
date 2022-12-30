@@ -8,6 +8,8 @@ flask = "*"
 flask-mysqldb = "*"
 flask-cors = "*"
 python-dotenv = "*"
+flask-marshmallow = "*"
+flask-sqlalchemy = "*"
 
 [dev-packages]
 
