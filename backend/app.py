@@ -72,7 +72,14 @@ def login():
 
 @app.route('/home', methods=['GET'])
 def home():
-    return load_data('product')
+    cursor = mysql.connection.cursor()
+    query_string = "SELECT * FROM product ORDER BY date_added DESC LIMIT 5;"
+    cursor.execute(query_string)
+    query = cursor.fetchall()
+    data = load_data(cursor, query)
+    cursor.close()
+
+    return data
     
 
 def dictify(request):
@@ -80,12 +87,12 @@ def dictify(request):
     return ast.literal_eval(request.get_data().decode('UTF-8'))
 
 
-def load_data(table):
-    cursor = mysql.connection.cursor()
-    query_string = "SELECT * FROM %s"% (table)
-    cursor.execute(query_string)
-    query = cursor.fetchall()
-    cursor.close()
+def load_data(cursor, query):
+    # cursor = mysql.connection.cursor()
+    # query_string = "SELECT * FROM %s"% (table)
+    # cursor.execute(query_string)
+    # query = cursor.fetchall()
+    # cursor.close()
 
     fields = []
     for items in cursor.description:
