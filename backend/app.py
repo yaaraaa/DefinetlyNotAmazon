@@ -69,6 +69,11 @@ def login():
     return jsonify(validation)
 
 
+@app.route('/home', methods=['GET'])
+def home():
+    return jsonify({'Hello':'world'})
+
+
 def dictify(request):
     'Converts request byte object to dictionary'
     return ast.literal_eval(request.get_data().decode('UTF-8'))
