@@ -15,23 +15,21 @@
       <div class="column is-12">
         <h2 class="is-size-2 has-text-centered"> Latest products</h2>
       </div>
-    <!--<div 
+    <div 
           class="column is-3"
-          v-for="product in latestProducts
-          v-bind:key="product.id"
+          v-for="product in latestProducts"
+          v-bind:key="product"
         >
           <div class="box">
-            <figure class="image mb--4"
-              <img v-bind:src="product.get_thumbnail">
+            <figure class="image mb--4">
+              <img v-bind:src="product.image">
             </figure>
 
             <h3 class="is-size-4">{{ product.name }}</h3>
             <p class="is-size-6 has-text-grey"> ${{ product.price }}</p>
-
-            View details (will be a button)
           </div>
         </div>
-        -->
+       
 
     </div>
   </div>
