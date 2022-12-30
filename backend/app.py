@@ -18,36 +18,34 @@ mysql = MySQL(app)
 
 @app.route('/register', methods = ['GET', 'POST'])
 def Register():
-    pass
-    # cursor = mysql.connection.cursor()
-    # if request.method == "POST":
-    #     data = request.get_data().decode("UTF-8")
-    #     user = ast.literal_eval(data)
+    cursor = mysql.connection.cursor()
+    if request.method == "POST":
+        data = request.get_data().decode("UTF-8")
+        user = ast.literal_eval(data)
 
-    #     cursor.execute('''INSERT INTO customer (email, 
-    #                                             password, 
-    #                                             balance, 
-    #                                             username, 
-    #                                             Bdate, 
-    #                                             Fname, 
-    #                                             Lname, 
-    #                                             floor, 
-    #                                             street, 
-    #                                             area, 
-    #                                             city, 
-    #                                             country)
-    #         VALUES ('%s', '%s', 0.0, '%s', '%s', '%s', '%s', NULL, NULL, NULL, NULL, NULL);'''%
-    #                                            (user['email'], 
-    #                                             user['password'], 
-    #                                             user['firstname']+' '+user['lastname'], 
-    #                                             user['dateOfBirth'], 
-    #                                             user['firstname'], 
-    #                                             user['lastname']))
-
-    #     mysql.connection.commit()
-    #     cursor.close()
-
-    #     return 'User successfully registered'
+        cursor.execute('''INSERT INTO customer (email, 
+                                                password, 
+                                                balance, 
+                                                username, 
+                                                Bdate, 
+                                                Fname, 
+                                                Lname, 
+                                                floor, 
+                                                street, 
+                                                area, 
+                                                city, 
+                                                country)
+            VALUES ('%s', '%s', 0.0, '%s', '%s', '%s', '%s', NULL, NULL, NULL, NULL, NULL);'''%
+                                               (user['email'], 
+                                                user['password'], 
+                                                user['firstname']+' '+user['lastname'], 
+                                                user['dateOfBirth'], 
+                                                user['firstname'], 
+                                                user['lastname']))
+        mysql.connection.commit()
+    else:
+        return load_data('customer')
+        # return 'User successfully registered'
 
     # else:
     #     cursor.execute('SELECT * FROM customer;')
@@ -73,7 +71,7 @@ def login():
 
 @app.route('/home', methods=['GET'])
 def home():
-    return load_data('product')
+    return jsonify(load_data('product'))
     
 
 def dictify(request):
