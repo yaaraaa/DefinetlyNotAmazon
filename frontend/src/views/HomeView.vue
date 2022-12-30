@@ -18,11 +18,11 @@
     <div 
           class="column is-3"
           v-for="product in latestProducts"
-          v-bind:key="product"
+          v-bind:key="product.product_id"
         >
           <div class="box">
             <figure class="image mb--4">
-              <img v-bind:src="product">
+              <img v-bind:src="product.image">
             </figure>
 
             <!-- <h3 class="is-size-4">{{ product.name }}</h3>
@@ -42,6 +42,17 @@ export default {
   data() {
     return {
       latestProducts: []
+      // {
+      //   product_id:self.product_id,
+      //   date_added:self.date_added,
+      //   image:self.image,
+      //   brand:self.brand,
+      //   model:self.model,
+      //   price:self.price,
+      //   name:self.name,
+      //   discount_amount:self.discount_amount,
+      //   date_updated:self.date_updated
+      // }
       //'https://images-na.ssl-images-amazon.com/images/I/71oVh2UO8xL._SL1500_.jpg', 'https://i5.walmartimages.com/asr/67bd3300-5231-4fe7-8dbe-37562aafb8f4_1.17f76f8ffae7f60409efa7dfc601dc7f.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF'
     }
   },
@@ -57,8 +68,9 @@ export default {
       axios
         .get(path)
         .then(response => {
-          this.latestProducts.push(response.data)
-          console.log(response.data)
+          this.latestProducts = response.data
+          // console.log(response.data)
+          console.log(this.latestProducts)
           //this.latestProducts = response.data
           //console.log(this.latestProducts)
         })

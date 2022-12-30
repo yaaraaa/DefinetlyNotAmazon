@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, request, render_template
 from flask_mysqldb import MySQL
 from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
+# from flask_sqlalchemy import SQLAlchemy
+# from flask_marshmallow import Marshmallow
 
 # from io import BytesIO
 # from PIL import Image
@@ -90,24 +90,15 @@ def login():
 
 @app.route('/home', methods=['GET'])
 def home():
-    cursor = mysql.connection.cursor()
-    query_string = "SELECT * FROM product;"
-    cursor.execute(query_string)
-    all_products = cursor.fetchall()
-    # results = products_schema.dump(all_products)
-    cursor.close()
-    result = {
-        'product_id':"",
-        'date_added':"",
-        'price':"",
-        'image':"",
-        'brand':"",
-        'model':"",
-        'quantity':"",
-        'name':"",
-        'discount_amount':"",
-        'date_updated':""
-    }
+    
+
+    # print(all_products)
+    # print(fields)
+    # r = [{'hello':'world'},{'fuck':'world'}]
+
+    # for i in r:
+        # yield r
+    return load_data()
     
     # print(jsonify(results))
     # return jsonify(results)
@@ -117,6 +108,43 @@ def home():
 def dictify(request):
     'Converts request byte object to dictionary'
     return ast.literal_eval(request.get_data().decode('UTF-8'))
+
+
+def load_data():
+    cursor = mysql.connection.cursor()
+    query_string = "SELECT * FROM product;"
+    cursor.execute(query_string)
+    all_products = cursor.fetchall()
+    # results = products_schema.dump(all_products)
+    cursor.close()
+    fields = (
+        'product_id',
+        'date_added',
+        'price',
+        'image',
+        'brand',
+        'model',
+        'quantity',
+        'name',
+        'discount_amount',
+        'date_updated'
+    )
+    a = {}
+    b = []
+    for idx,i in enumerate(all_products):
+        a.update(zip(fields, i))
+        b.append(a)
+    return jsonify(b)
+    
+    # for i,instance in enumerate(all_products):
+    #     for record in instance:
+    #         if record == 0:
+    #             print(fields)
+    #             return fields
+    #         for field in fields:
+    #         # print("shit: ",record[i])
+    #             # print(record)
+    #             field = record
 
 
 if __name__ == "__main__":
