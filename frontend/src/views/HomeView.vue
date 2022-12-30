@@ -54,10 +54,12 @@ export default {
   },
   methods: {
     getLatestProducts() {
+      const path = 'http://localhost:5000/home'
       axios
-        .get(/*something*/)
+        .get(path)
         .then(response => {
           this.latestProducts = response.data
+          console.log(this.latestProducts)
         })
         .catch(error => {
           console.log(error)
