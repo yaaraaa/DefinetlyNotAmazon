@@ -91,10 +91,10 @@ def load_data(table):
     for items in cursor.description:
         fields.append(items[0])
 
-    instance, all_instances = {}, []
+    all_instances = []
     for row in query:
-        instance.update(zip(fields, row))
-        all_instances.append(instance)
+        all_instances.append(dict(zip(fields, row)))
+
     return jsonify(all_instances)
 
 
