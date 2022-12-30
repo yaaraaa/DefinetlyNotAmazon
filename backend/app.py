@@ -11,19 +11,19 @@ import ast
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:"DefinetlyNotAmazon"@localhost/onlShop'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-ma = Marshmallow(app)
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:"DefinetlyNotAmazon"@localhost/onlShop'
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# db = SQLAlchemy(app)
+# ma = Marshmallow(app)
 CORS(app)
 
 
-class ProductSchema(ma.Schema):
-    class Meta:
-        fields = ('date_added', 'price', 'image', 'brand', 'model', 'quantity', 'name', 'discount_amount', 'date_updated')
+# class ProductSchema(ma.Schema):
+#     class Meta:
+#         fields = ('date_added', 'price', 'image', 'brand', 'model', 'quantity', 'name', 'discount_amount', 'date_updated')
 
-product_schema = ProductSchema()
-products_schema = ProductSchema(many=True)
+# product_schema = ProductSchema()
+# products_schema = ProductSchema(many=True)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
@@ -94,10 +94,23 @@ def home():
     query_string = "SELECT * FROM product;"
     cursor.execute(query_string)
     all_products = cursor.fetchall()
-    results = products_schema.dump(all_products)
+    # results = products_schema.dump(all_products)
     cursor.close()
-    print(jsonify(results))
-    return jsonify(results)
+    result = {
+        'product_id':"",
+        'date_added':"",
+        'price':"",
+        'image':"",
+        'brand':"",
+        'model':"",
+        'quantity':"",
+        'name':"",
+        'discount_amount':"",
+        'date_updated':""
+    }
+    
+    # print(jsonify(results))
+    # return jsonify(results)
     # return jsonify({image:"https://images-na.ssl-images-amazon.com/images/I/71oVh2UO8xL._SL1500_.jpg,http://pisces.bbystatic.com/image2/BestBuy_US/images/products/5689/5689019_sa.jpg,https://images-na.ssl-images-amazon.com/images/I/81EzIaCamJL._SL1500_.jpg,https://images-na.ssl-images-amazon.com/images/I/71X2tAW39aL._SL1500_.jpg,https://images-na.ssl-images-amazon.com/images/I/71c8xybNthL._SL1500_.jpg,http://static.bhphoto.com/images/smallimages/1368452917000_911749.jpg,http://static.bhphoto.com/images/images500x500/sanus_vlf410_b1_vlf410_super_slim_full_motion_1368452917000_911749.jpg,http://static.bhphoto.com/images/multiple_images/thumbnails/1368452838000_IMG_316474.jpg"})
 
 
