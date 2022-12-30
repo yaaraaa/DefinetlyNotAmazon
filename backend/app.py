@@ -43,6 +43,7 @@ def Register():
                                                 user['firstname'], 
                                                 user['lastname']))
         mysql.connection.commit()
+        cursor.close()
     else:
         return load_data('customer')
         # return 'User successfully registered'
@@ -71,7 +72,7 @@ def login():
 
 @app.route('/home', methods=['GET'])
 def home():
-    return jsonify(load_data('product'))
+    return load_data('product')
     
 
 def dictify(request):
