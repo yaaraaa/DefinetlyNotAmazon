@@ -83,16 +83,7 @@ def dictify(request):
 
 def load_data(table):
     cursor = mysql.connection.cursor()
-
-    match table:
-        case 'product':
-            query_string = "SELECT * FROM product;"
-
-        
-        case 'customer':
-            query_string = "SELECT * FROM customer"
-
-
+    query_string = "SELECT * FROM %s"% (table)
     cursor.execute(query_string)
     query = cursor.fetchall()
     cursor.close()
