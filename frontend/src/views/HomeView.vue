@@ -25,8 +25,8 @@
               <img v-bind:src="product.image">
             </figure>
 
-            <!-- <h3 class="is-size-4">{{ product.name }}</h3>
-            <p class="is-size-6 has-text-grey"> ${{ product.price }}</p> -->
+            <h3 class="is-size-4">{{ product.name }}</h3>
+            <p class="is-size-6 has-text-grey"> ${{ product.price }}</p>
           </div>
         </div>
        
