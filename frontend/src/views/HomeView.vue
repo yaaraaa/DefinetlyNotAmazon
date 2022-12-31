@@ -30,7 +30,7 @@
               <p class="is-size-5 has-text-grey"> ${{ product.price }}</p>
               <br>
               <div class="button is-info is-small is-rounded">Vew details</div>
-              <!-- <router-link v-bind:to="product.get_absolute_url" class="button is-info is-small is-rounded4">View details</router-link> -->
+              <router-link v-bind:to="'/' + product.product_id" class="button is-info is-small is-rounded4">View details</router-link>
             </div>
           </div>
       </div>
@@ -45,18 +45,6 @@ export default {
   data() {
     return {
       latestProducts: []
-      // {
-      //   product_id:self.product_id,
-      //   date_added:self.date_added,
-      //   image:self.image,
-      //   brand:self.brand,
-      //   model:self.model,
-      //   price:self.price,
-      //   name:self.name,
-      //   discount_amount:self.discount_amount,
-      //   date_updated:self.date_updated
-      // }
-      //'https://images-na.ssl-images-amazon.com/images/I/71oVh2UO8xL._SL1500_.jpg', 'https://i5.walmartimages.com/asr/67bd3300-5231-4fe7-8dbe-37562aafb8f4_1.17f76f8ffae7f60409efa7dfc601dc7f.jpeg?odnHeight=450&odnWidth=450&odnBg=FFFFFF'
     }
   },
   mounted() {

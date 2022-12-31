@@ -18,7 +18,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/product', // should be a dynamic path instead
+    path: '/product/:id', // should be a dynamic path instead
     name: 'product',
     component: ProductView 
   },

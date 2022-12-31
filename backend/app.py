@@ -82,6 +82,17 @@ def home():
     return data
     
 
+@app.route('/product/<id>', methods=['GET','POST'])
+def product(id):
+    cursor = mysql.connection.cursor()
+    data = dictify(request)
+    query = 'SELECT * FROM product WHERE product_id=%s;'%(data['product_id'])
+    cursor.execute(query)
+    result = cursor.fetchall()
+
+    return url_for(result)
+
+
 def dictify(request):
     'Converts request byte object to dictionary'
     return ast.literal_eval(request.get_data().decode('UTF-8'))
