@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template, make_response, url_for
+from flask import Flask, jsonify, request, render_template, make_response, url_for, redirect
 from flask_mysqldb import MySQL
 from flask_cors import CORS
 import ast
