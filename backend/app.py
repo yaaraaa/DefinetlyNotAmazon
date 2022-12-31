@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, make_response, url_for, redirect
 from flask_mysqldb import MySQL
 from flask_cors import CORS
 import ast
@@ -9,7 +9,7 @@ CORS(app)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'Root123*'
+app.config['MYSQL_PASSWORD'] = 'DefinetlyNotAmazon'
 app.config['MYSQL_DB'] = 'onlShop'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -102,7 +102,7 @@ def load_data(cursor, query):
     for row in query:
         all_instances.append(dict(zip(fields, row)))
 
-    return jsonify(all_instances)
+    return make_response(all_instances)
 
 
 if __name__ == "__main__":
