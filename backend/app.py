@@ -9,7 +9,7 @@ CORS(app)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'DefinetlyNotAmazon'
+app.config['MYSQL_PASSWORD'] = 'Root123*'
 app.config['MYSQL_DB'] = 'onlShop'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -73,8 +73,8 @@ def login():
 @app.route('/home', methods=['GET'])
 def home():
     cursor = mysql.connection.cursor()
-    query_string = "SELECT * FROM product ORDER BY date_added DESC LIMIT 5;"
-    cursor.execute(query_string)
+    query_string = "SELECT * FROM product ORDER BY date_added DESC LIMIT 85, 5;"
+    cursor.execute(query_string),
     query = cursor.fetchall()
     data = load_data(cursor, query)
     cursor.close()
