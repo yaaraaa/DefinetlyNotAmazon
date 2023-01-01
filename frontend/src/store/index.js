@@ -34,7 +34,7 @@ export default createStore({
       state.cart.items.push(item)
     // }
     localStorage.setItem('cart', JSON.stringify(state.cart))
-  }
+  },
 },
 
   actions: {
