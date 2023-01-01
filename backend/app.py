@@ -1,8 +1,10 @@
 from flask import Flask, jsonify, request, render_template, make_response, url_for, redirect
 from flask_mysqldb import MySQL
 from flask_cors import CORS
+import hashlib
 import ast
 import re
+
 
 
 app = Flask(__name__)
@@ -10,7 +12,7 @@ CORS(app)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'Root123*'
+app.config['MYSQL_PASSWORD'] = 'DefinetlyNotAmazon'
 app.config['MYSQL_DB'] = 'onlShop'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -23,11 +25,15 @@ def Register():
         cursor = mysql.connection.cursor()
         data = request.get_data().decode("UTF-8")
         user = ast.literal_eval(data)
+        
+        # Hashing the password
+        salt = "5gz"
+        dataBase_password = user['password']+salt
+        hashed = hashlib.md5(dataBase_password.encode())
 
         cursor.execute('''INSERT INTO customer (email, 
                                                 password, 
                                                 balance, 
-                                                username, 
                                                 Bdate, 
                                                 Fname, 
                                                 Lname, 
@@ -36,17 +42,18 @@ def Register():
                                                 area, 
                                                 city, 
                                                 country)
-            VALUES ('%s', '%s', 0.0, '%s', '%s', '%s', '%s', NULL, NULL, NULL, NULL, NULL);'''%
+            VALUES ('%s', '%s', 0.0, '%s', '%s', '%s', NULL, NULL, NULL, NULL, NULL);'''%
                                                (user['email'], 
-                                                user['password'], 
-                                                user['firstname']+' '+user['lastname'], 
-                                                user['dateOfBirth'], 
+                                                hashed.hexdigest(),  
+                                                user['birthdate'], 
                                                 user['firstname'], 
                                                 user['lastname']))
         mysql.connection.commit()
         cursor.close()
+
+        return "Success"
     else:
-        return load_data('customer')
+        return "Hello"
         # return 'User successfully registered'
 
     # else:

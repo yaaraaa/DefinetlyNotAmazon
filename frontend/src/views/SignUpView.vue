@@ -110,7 +110,7 @@ export default {
                 }
 
                 axios
-                    .post("some path", formData)
+                    .post("http://localhost:5000/register", formData)
                     .then(response => {
                         toast({
                             message: 'Account created, please log in!',
