@@ -1,34 +1,10 @@
 <template>
   <div class="page-product">
-    
-    <div class="column is-multiline">
-        <div class="column is-9">
-            <figure class="image mb-6">
-                <img v-bind:src="product.image">
-            </figure>
-            <h1 class="title">{{ product.name }}</h1>
-            <p>{{ product.brand }}</p>
-            <p>{{ product.model }}</p>
-        </div>
-
-        <div class="column is-3">
-            <h2 class="subtitle">Information</h2>
-
-            <p><strong>Price: </strong>${{ product.price }}</p>
-            
-            <div class="field has-addons mt-6">
-                <div class="control">
-                    <input type="number" class="input" min="1" v-model="quantity">
-                </div>
-                <div class="control">
-                    <a class="button is-info" @click="addToCart">Add to cart</a>
-                </div>
-            </div>
-        </div>
-
-    </div>
+    <figure class="image mb-6" v-for="p in product">
+        <img  v-bind:src="p.image">
+    </figure>
   </div>
-  
+
 </template>
 
 <script>
@@ -39,7 +15,7 @@ export default {
     name: 'ProductView',
     data() {
         return {
-            product: {},
+            product: [],
             quantity: 1
         }
     }, 
@@ -48,8 +24,16 @@ export default {
     },
     methods: {
         getProduct() {
-          
-          // get product code
+          const id_slug = this.$route.params.id
+          console.log(id_slug)
+          axios.get(`http://localhost:5000/product/${id_slug}`)
+          .then(response => {
+            this.product = response.data
+            console.log(response.data)
+          })
+          .catch(error => {
+            console.log(error)
+          })
 
           // changing tab name
           document.title = this.product.name + ' | HighTech'

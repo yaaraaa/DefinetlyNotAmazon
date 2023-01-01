@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template, make_response, url_for
+from flask import Flask, jsonify, request, render_template, make_response, url_for, redirect
 from flask_mysqldb import MySQL
 from flask_cors import CORS
 import ast
@@ -9,7 +9,7 @@ CORS(app)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'DefinetlyNotAmazon'
+app.config['MYSQL_PASSWORD'] = 'Root123*'
 app.config['MYSQL_DB'] = 'onlShop'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -81,6 +81,16 @@ def home():
 
     return data
     
+
+@app.route('/product/<id>', methods=['GET','POST'])
+def product(id):
+    cursor = mysql.connection.cursor()
+    query = 'SELECT * FROM product WHERE product_id=%s;'%(id)
+    cursor.execute(query)
+    result = cursor.fetchall()
+    data = load_data(cursor, result)
+    return data
+
 
 def dictify(request):
     'Converts request byte object to dictionary'
