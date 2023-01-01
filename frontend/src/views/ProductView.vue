@@ -1,11 +1,10 @@
 <template>
   <div class="page-product">
-    <figure class="image mb-6">
-            <img v-bind:src="product.image">
+    <figure class="image mb-6" v-for="p in product">
+        <img  v-bind:src="p.image">
     </figure>
-    
   </div>
-  
+
 </template>
 
 <script>
@@ -16,7 +15,7 @@ export default {
     name: 'ProductView',
     data() {
         return {
-            product: {},
+            product: [],
             quantity: 1
         }
     }, 
@@ -25,8 +24,9 @@ export default {
     },
     methods: {
         getProduct() {
-          
-          axios.get('/product/:id')
+          const id_slug = this.$route.params.id
+          console.log(id_slug)
+          axios.get(`http://localhost:5000/product/${id_slug}`)
           .then(response => {
             this.product = response.data
             console.log(response.data)

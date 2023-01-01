@@ -30,7 +30,7 @@
               <p class="is-size-5 has-text-grey"> ${{ product.price }}</p>
               <br>
               <div class="button is-info is-small is-rounded">Vew details</div>
-              <router-link v-bind:to="'/' + product.product_id" class="button is-info is-small is-rounded4">View details</router-link>
+              <router-link v-bind:to="{path:'product/'+product.product_id, params:{'id':product.product_id}}" class="button is-info is-small is-rounded4">View details</router-link>
             </div>
           </div>
       </div>

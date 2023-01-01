@@ -85,12 +85,11 @@ def home():
 @app.route('/product/<id>', methods=['GET','POST'])
 def product(id):
     cursor = mysql.connection.cursor()
-    data = dictify(request)
-    query = 'SELECT * FROM product WHERE product_id=%s;'%(data['product_id'])
+    query = 'SELECT * FROM product WHERE product_id=%s;'%(id)
     cursor.execute(query)
     result = cursor.fetchall()
-
-    return url_for(result)
+    data = load_data(cursor, result)
+    return data
 
 
 def dictify(request):
