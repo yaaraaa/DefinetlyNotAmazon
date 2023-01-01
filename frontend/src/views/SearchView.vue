@@ -49,14 +49,13 @@ export default {
 
         if(params.get('query')) {
             this.query = params.get('query')
-
             this.performSearch()
         }
     },
     methods: {
         performSearch() {
             axios
-            .post('some path', {'query': this.query})
+            .post(`http://localhost:5000/search/${this.query}`, {'query': this.query})
             .then(response => {
                 this.products = response.data      
             })

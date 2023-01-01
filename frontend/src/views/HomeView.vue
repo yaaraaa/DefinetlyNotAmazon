@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <section class="hero is-medium is-dark mb-6">
+      <!-- <img src="https://tse1.mm.bing.net/th?id=OIP.L4Ysm20ung681aw6Q0SPxQHaEK&pid=Api&P=0"/> -->
       <div class="hero-body has-text-centered">
         <p class="title mb-6">
             Welcome to HighTech
