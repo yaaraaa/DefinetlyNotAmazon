@@ -34,8 +34,8 @@
         </div>
 
         <div class="navbar-end">
-           <router-link to="/item1" class="navbar-item">item1</router-link>
-           <router-link to="/item2" class="navbar-item">item2</router-link>
+           <!-- <router-link to="/item1" class="navbar-item">item1</router-link>
+           <router-link to="/item2" class="navbar-item">item2</router-link> -->
 
            <div class="navbar-item ">
             <div class="buttons">
