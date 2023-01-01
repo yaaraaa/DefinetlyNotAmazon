@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <section class="hero is-medium is-dark mb-6">
+      <!-- <img src="https://tse1.mm.bing.net/th?id=OIP.L4Ysm20ung681aw6Q0SPxQHaEK&pid=Api&P=0"/> -->
       <div class="hero-body has-text-centered">
         <p class="title mb-6">
             Welcome to HighTech
@@ -29,8 +30,7 @@
               <h3 class="is-size-10">{{ product.name }}</h3>
               <p class="is-size-5 has-text-grey"> ${{ product.price }}</p>
               <br>
-              <div class="button is-info is-small is-rounded">Vew details</div>
-              <router-link v-bind:to="{path:'product/'+product.product_id, params:{'id':product.product_id}}" class="button is-info is-small is-rounded4">View details</router-link>
+              <router-link v-bind:to="{path:'product/'+product.product_id, params:{'id':product.product_id}}" class="button is-info is-small is-rounded">View details</router-link>
             </div>
           </div>
       </div>
