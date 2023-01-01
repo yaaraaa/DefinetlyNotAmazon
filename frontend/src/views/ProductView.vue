@@ -1,8 +1,29 @@
 <template>
   <div class="page-product">
-    <figure class="image mb-6" v-for="p in product">
-        <img  v-bind:src="p.image">
-    </figure>
+        <div class="column is-multiline">
+        <div class="column is-9">
+            <figure class="image mb-6" v-for="product in product" v-bind:key="product.product_id">
+                <img v-bind:src="product.image">
+            </figure>
+            <h1 class="subtitle" v-for="product in product" v-bind:key="product.product_id">{{ product.name }}</h1>
+            <div class="details" v-for="product in product" v-bind:key="product.product_id">
+              <p>Brand: {{ product.brand }}</p>
+              <p>Model: {{ product.model }}</p>
+            </div>
+        </div>
+        <div class="column is-3">
+            <p v-for="product in product" v-bind:key="product.product_id"><strong>Price: </strong>${{ product.price }}</p>
+            
+            <div class="field has-addons mt-6">
+                <div class="control">
+                    <input type="number" class="input" min="1" v-model="quantity">
+                </div>
+                <div class="control">
+                    <a class="button is-info" @click="addToCart">Add to cart</a>
+                </div>
+            </div>
+        </div>
+    </div>
   </div>
 
 </template>

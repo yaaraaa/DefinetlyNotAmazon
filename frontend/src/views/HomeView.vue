@@ -29,8 +29,7 @@
               <h3 class="is-size-10">{{ product.name }}</h3>
               <p class="is-size-5 has-text-grey"> ${{ product.price }}</p>
               <br>
-              <div class="button is-info is-small is-rounded">Vew details</div>
-              <router-link v-bind:to="{path:'product/'+product.product_id, params:{'id':product.product_id}}" class="button is-info is-small is-rounded4">View details</router-link>
+              <router-link v-bind:to="{path:'product/'+product.product_id, params:{'id':product.product_id}}" class="button is-info is-small is-rounded">View details</router-link>
             </div>
           </div>
       </div>

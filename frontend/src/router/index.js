@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ProductView from '../views/ProductView.vue'
 import CategoryView from '../views/CategoryView.vue'
+import SearchView from '../views/SearchView.vue'
 
 const routes = [
   {
@@ -18,12 +19,17 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/product/:id', // should be a dynamic path instead
+    path: '/search',
+    name: 'search',
+    component: SearchView
+  },
+  {
+    path: '/product/:id', 
     name: 'product',
     component: ProductView 
   },
   {
-    path: '/category', // should be a dynamic path instead
+    path: '/category',
     name: 'category',
     component: CategoryView 
   }
