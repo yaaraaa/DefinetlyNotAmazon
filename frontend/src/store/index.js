@@ -2,12 +2,12 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
+    product: [],
     cart: {
-      items: [],
+        items: [],
     },
     isAuthenticated: false,
     token: '',
-
   },
   mutations: {
     initializeStore(state) {
@@ -19,26 +19,28 @@ export default createStore({
       else {
         localStorage.setItem('cart', JSON.stringify(state.cart))
       }
-    }
-  },
-  addToCart(state, item) {
-    // to check if item is already in cart
-    const exists = state.cart.items.filter(i => i.product.product_id === item.product.product_id)
+    },
+  addToCart(state, item) {    
+    // const exists = state.cart.items.filter(i => i.product.product_id === item.product.product_id)
 
-    // length is not zero then we know item already exists in cart
-    if(exists.length) {
-      // increments quantity of already existing item
-      exists[0].quantity = parseInt(exists[0].quanity) + parseInt(item.quanity)
-    } 
-    // if item not in cart, it is added to cart
-    else {
-      state.cart.item.push(item)
-    }
+
+    // // length is not zero then we know item already exists in cart
+    // if (exists.length) {
+    //   // increments quantity of already existing item
+    //   exists[0].quantity = parseInt(exists[0].quanity) + parseInt(item.quanity)
+    // } 
+    // // if item not in cart, it is added to cart
+    // else {
+      state.cart.items.push(item)
+    // }
     localStorage.setItem('cart', JSON.stringify(state.cart))
-  },
+  }
+},
 
   actions: {
   },
   modules: {
   }
 })
+
+

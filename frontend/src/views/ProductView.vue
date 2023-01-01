@@ -1,6 +1,6 @@
 <template>
   <div class="page-product">
-        <div class="column is-multiline">
+      <div class="column is-multiline">
         <div class="column is-9">
             <figure class="image mb-6" v-for="product in product" v-bind:key="product.product_id">
                 <img v-bind:src="product.image">
@@ -46,7 +46,7 @@ export default {
     methods: {
         getProduct() {
           const id_slug = this.$route.params.id
-          console.log(id_slug)
+          
           axios.get(`http://localhost:5000/product/${id_slug}`)
           .then(response => {
             this.product = response.data
