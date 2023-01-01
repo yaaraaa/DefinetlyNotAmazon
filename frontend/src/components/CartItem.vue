@@ -6,8 +6,8 @@
             {{ item.quantity }}
         </td>
         <td>${{ getItemTotal(item).toFixed(2) }}</td>
-        <td><button class="delete"></button></td> -->
-        <!-- <td><router-link :to="item.product"></router-link></td> -->
+        <td><button class="delete"></button></td> --> -->
+        <td><router-link :to="item.product"></router-link></td>
     </tr>
 </template>
 
