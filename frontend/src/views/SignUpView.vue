@@ -74,6 +74,9 @@ export default {
             errors: []
         }
     },
+    mounted() {
+        document.title ='Sign up | HighTech'
+    },
     methods: {
         submitForm() {
             this.error = []
@@ -132,9 +135,6 @@ export default {
                         }
                     })
             }
-
-
-
 
         }
     }
