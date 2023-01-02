@@ -19,72 +19,69 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 mysql = MySQL(app)
 
 
-@app.route('/register', methods = ['GET', 'POST'])
+@app.route('/register', methods = ['POST'])
 def Register():
-    if request.method == "POST":
-        cursor = mysql.connection.cursor()
-        data = request.get_data().decode("UTF-8")
-        user = ast.literal_eval(data)
-        
-        # Hashing the password
-        salt = "5gz"
-        dataBase_password = user['password']+salt
-        hashed = hashlib.md5(dataBase_password.encode())
+    cursor = mysql.connection.cursor()
+    user = dictify(request)
+    
+    # Hashing the password
+    salt = "5gz"
+    dataBase_password = user['password']+salt
+    hashed = hashlib.md5(dataBase_password.encode())
 
-        cursor.execute('''INSERT INTO customer (email, 
-                                                password, 
-                                                balance, 
-                                                Bdate, 
-                                                Fname, 
-                                                Lname, 
-                                                floor, 
-                                                street, 
-                                                area, 
-                                                city, 
-                                                country)
-            VALUES ('%s', '%s', 0.0, '%s', '%s', '%s', NULL, NULL, NULL, NULL, NULL);'''%
-                                               (user['email'], 
-                                                hashed.hexdigest(),  
-                                                user['birthdate'], 
-                                                user['firstname'], 
-                                                user['lastname']))
-        mysql.connection.commit()
-        cursor.close()
+    cursor.execute('''INSERT INTO customer (email, 
+                                            password, 
+                                            balance, 
+                                            Bdate, 
+                                            Fname, 
+                                            Lname, 
+                                            floor, 
+                                            street, 
+                                            area, 
+                                            city, 
+                                            country)
+        VALUES ('%s', '%s', 0.0, '%s', '%s', '%s', NULL, NULL, NULL, NULL, NULL);'''%
+                                            (user['email'], 
+                                            hashed.hexdigest(),  
+                                            user['birthdate'], 
+                                            user['firstname'], 
+                                            user['lastname']))
+    mysql.connection.commit()
+    cursor.close()
 
-        return "Success"
-    else:
-        return "Hello"
-        # return 'User successfully registered'
-
-    # else:
-    #     cursor.execute('SELECT * FROM customer;')
-    #     data = cursor.fetchall()
-    #     cursor.close()
-    #     return jsonify(data)
+    return "Success"
     
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['POST', 'GET'])
 def login():
     # Should be checked in POST
     data = dictify(request)
-    email, password = data['email'], data['password']
+    email = data['email']
+    password = data['password']
+
+    # Hashing the password
+    # salt = "5gz"
+    # dataBase_password = data['password']+salt
+    # hashed = hashlib.md5(dataBase_password.encode())
 
     cursor = mysql.connection.cursor()
-    query_statement = "SELECT * FROM customer WHERE email = %s AND password = %s;"
-    cursor.execute(query_statement, (email, password))
-    validation = cursor.fetchall()
+    query_statement = f"SELECT * FROM customer WHERE email = '{email}' AND password = '{password}';"
+    
+    cursor.execute(query_statement)
+    result = cursor.fetchall()
+    data = load_data(cursor, result)
     cursor.close()
     
     # Should check if validation has an element, if it does, allow login
-    return jsonify(validation)
+    return make_response({'status':'success'})
 
 
 @app.route('/home', methods=['GET'])
 def home():
     cursor = mysql.connection.cursor()
     query_statement = "SELECT * FROM product ORDER BY date_added DESC LIMIT 85, 5;"
-    cursor.execute(query_statement),
+    cursor.execute(query_statement)
     result = cursor.fetchall()
     data = load_data(cursor, result)
     cursor.close()
@@ -143,7 +140,7 @@ def load_data(cursor, query):
     # cursor.execute(query_string)
     # query = cursor.fetchall()
     # cursor.close()
-
+    
     fields = []
     for items in cursor.description:
         fields.append(items[0])
