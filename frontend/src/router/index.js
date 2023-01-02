@@ -4,24 +4,14 @@ import ProductView from '../views/ProductView.vue'
 import CategoryView from '../views/CategoryView.vue'
 import SearchView from '../views/SearchView.vue'
 import CartView from '../views/CartView.vue'
-import LoginView from '../views/LoginFormView.vue'
-import RegisterView from '../views/RegisterFormView.vue'
+import SignUpView from '../views/SignUpView.vue'
+import LoginView from '../views/LoginView.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
     component: HomeView
-  },
-  {
-    path: '/log-in',
-    name: 'login',
-    component: LoginView
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: RegisterView
   },
   {
     path: '/about',
@@ -51,6 +41,16 @@ const routes = [
     name: 'category',
     component: CategoryView 
   },
+  {
+    path: '/sign-up',
+    name: 'SignUp',
+    component: SignUpView
+  },
+  {
+    path: '/log-in',
+    name: 'LogIn',
+    component: LoginView
+  }  
 
 ]
 
