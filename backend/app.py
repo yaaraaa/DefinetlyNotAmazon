@@ -70,11 +70,15 @@ def login():
     
     cursor.execute(query_statement)
     result = cursor.fetchall()
+    
+    status = dict()
+    status['status'] = 1 if len(result) != 0 else 0
+
     data = load_data(cursor, result)
     cursor.close()
     
     # Should check if validation has an element, if it does, allow login
-    return make_response({'status':'success'})
+    return status
 
 
 @app.route('/home', methods=['GET'])
