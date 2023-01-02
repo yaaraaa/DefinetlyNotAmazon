@@ -40,6 +40,7 @@
 
 <script>
 import axios from 'axios'
+import { toast } from 'bulma-toast'
 
 export default {
     name: 'LogIn',
@@ -75,7 +76,21 @@ export default {
                     .post("http://localhost:5000/login", formData)
                     .then(response => {
                         this.status = response.data.status
-                        console.log(response.data)
+                        console.log(this.status)
+                        if (this.status.length) {
+                            toast({
+                                    message: 'successfully logged in',
+                                    type: 'is-success',
+                                    dismissible: true,
+                                    pauseOnHover: true,
+                                    duration: 2000,
+                                    position: 'bottom-right',
+                                })
+                            this.$router.push('/')
+                        }
+                        else{
+                            this.errors.push('incorrect login information')
+                        }
                     })
                     
                     .catch(error => {
@@ -90,23 +105,6 @@ export default {
                             console.log(JSON.stringify(error))
                         }
                     })
-
-                if (this.status === 1) {
-                    toast({
-                            message: 'successfully logged in',
-                            type: 'is-success',
-                            dismissible: true,
-                            pauseOnHover: true,
-                            duration: 2000,
-                            position: 'bottom-right',
-                        })
-                        this.$router.push('/home')
-                }
-                else {
-                    this.errors.push('incorrect login information')
-                }
-                
-
             }
         }
     }

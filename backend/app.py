@@ -72,7 +72,7 @@ def login():
     result = cursor.fetchall()
     
     status = dict()
-    status['status'] = 1 if len(result) != 0 else 0
+    status['status'] = '1' if len(result) != 0 else ''
 
     data = load_data(cursor, result)
     cursor.close()
