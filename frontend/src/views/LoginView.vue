@@ -47,6 +47,7 @@ export default {
         return {
             email: '',
             password: '',
+            status: '',
             errors: []
         }
     },
@@ -73,16 +74,10 @@ export default {
                 axios
                     .post("http://localhost:5000/login", formData)
                     .then(response => {
-                        toast({
-                            message: 'successfully logged in',
-                            type: 'is-success',
-                            dismissible: true,
-                            pauseOnHover: true,
-                            duration: 2000,
-                            position: 'bottom-right',
-                        })
-                        this.$router.push('/home')
+                        this.status = response.data.status
+                        console.log(response.data)
                     })
+                    
                     .catch(error => {
                         if (error.response) {
                             for (const property in error.response.data) {
@@ -95,6 +90,23 @@ export default {
                             console.log(JSON.stringify(error))
                         }
                     })
+
+                if (this.status === 1) {
+                    toast({
+                            message: 'successfully logged in',
+                            type: 'is-success',
+                            dismissible: true,
+                            pauseOnHover: true,
+                            duration: 2000,
+                            position: 'bottom-right',
+                        })
+                        this.$router.push('/home')
+                }
+                else {
+                    this.errors.push('incorrect login information')
+                }
+                
+
             }
         }
     }

@@ -12,7 +12,7 @@ CORS(app)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'DefinetlyNotAmazon'
+app.config['MYSQL_PASSWORD'] = 'Root123*'
 app.config['MYSQL_DB'] = 'onlShop'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
