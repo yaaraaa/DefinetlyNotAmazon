@@ -1,56 +1,38 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import HomeView from '../views/HomeView.vue'
-import ProductView from '../views/ProductView.vue'
-import CategoryView from '../views/CategoryView.vue'
-import SearchView from '../views/SearchView.vue'
-import CartView from '../views/CartView.vue'
-import SignUpView from '../views/SignUpView.vue'
-import LoginView from '../views/LoginView.vue'
+import AddItemView from '../views/AddItemView.vue'
+import UpdateItemView from '../views/UpdateItemView.vue'
+import DeleteItem from '../views/DeleteItem.vue'
+import ViewItems from '../views/ViewItems.vue'
+
 
 const routes = [
   {
     path: '/',
-    name: 'home',
+    name: 'homeView',
     component: HomeView
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/add-product',
+    name: 'addProduct',
+    component: AddItemView
   },
   {
-    path: '/search',
-    name: 'search',
-    component: SearchView
+    path: '/update-product',
+    name: 'updateProduct',
+    component: UpdateItemView
   },
   {
-    path: '/cart',
-    name: 'cart',
-    component: CartView
+    path: '/delete-product',
+    name: 'deleteProduct',
+    component: DeleteItem
   },
   {
-    path: '/product/:id', 
-    name: 'product',
-    component: ProductView 
-  },
-  {
-    path: '/category',
-    name: 'category',
-    component: CategoryView 
-  },
-  {
-    path: '/sign-up',
-    name: 'SignUp',
-    component: SignUpView
-  },
-  {
-    path: '/log-in',
-    name: 'LogIn',
-    component: LoginView
-  }  
+    path: '/View-products',
+    name: 'viewProduct',
+    component: ViewItems
+  }          
 
 ]
 

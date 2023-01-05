@@ -4,7 +4,7 @@ from flask_cors import CORS
 import hashlib
 import ast
 import re
-
+from datetime import date
 
 
 app = Flask(__name__)
@@ -17,6 +17,143 @@ app.config['MYSQL_DB'] = 'onlShop'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 mysql = MySQL(app)
+
+
+@app.route('/update', methods=['POST'])
+def updateProduct():
+    cursor = mysql.connection.cursor()
+    productData = dictify(request)
+    today = date.today()
+
+    query_statement = '''UPDATE Product SET
+        date_updated = '%s',
+        name = '%s',
+        price = %s,
+        image = '%s',
+        brand = '%s',
+        model = '%s',
+        quantity = %s 
+        WHERE product_id = %s'''%(
+            today,
+            productData['productName'],
+            productData['price'],
+            productData['image'],
+            productData['brand'],
+            productData['model'],
+            productData['quantity'],
+            productData['productID'])
+    
+    cursor.execute(query_statement)
+    mysql.connection.commit()
+    cursor.close()
+    return "success"
+
+
+@app.route('/delete', methods=['POST'])
+def deleteProduct():
+    cursor = mysql.connection.cursor()
+    productData = dictify(request)
+
+    query_statement = "SELECT * FROM Product WHERE product_id=%s;"%(productData['productID'])
+    
+    cursor.execute(query_statement)
+    result = cursor.fetchall()
+    
+    status = dict()
+    status['idExists'] = '1' if len(result) != 0 else ''
+
+    query_statement = '''DELETE FROM Product WHERE product_id=%s'''%(productData['productID'])
+
+    cursor.execute(query_statement)
+    mysql.connection.commit()
+
+    cursor.close()
+    return status
+
+
+@app.route('/add', methods=['POST'])
+def addProduct():
+    cursor = mysql.connection.cursor()
+    productData = dictify(request)
+
+    today = date.today()
+
+    query_statement = '''INSERT INTO product (
+        date_added,
+        name,
+        price,
+        image,
+        brand,
+        model,
+        quantity,
+        discount_amount) VALUES ('%s','%s',%s,'%s','%s','%s',%s,%s)
+        '''%(
+            today,
+            productData['productName'],
+            productData['price'],
+            productData['image'],
+            productData['brand'],
+            productData['model'],
+            productData['quantity'],
+            productData['discount']
+        )
+
+    cursor.execute(query_statement)
+    mysql.connection.commit()
+
+    cursor.close()
+    return "success"
+
+
+@app.route('/home', methods=['GET'])
+def home():
+    cursor = mysql.connection.cursor()
+    query_statement = "SELECT * FROM product ORDER BY date_added DESC;"
+    cursor.execute(query_statement)
+    result = cursor.fetchall()
+    data = load_data(cursor, result)
+    cursor.close()
+
+    return data
+    
+
+@app.route('/product/<id>', methods=['GET'])
+def product(id):
+    cursor = mysql.connection.cursor()
+    query_statement = 'SELECT * FROM product WHERE product_id=%s;'%(id)
+    cursor.execute(query_statement)
+    result = cursor.fetchall()
+    data = load_data(cursor, result)
+    return data
+
+
+@app.route('/category/<category>')
+def category(category):
+    '''
+    accessories, tablets, mobiles, speakers, tv, parts, adapters, storage, 
+    '''
+    cursor = mysql.connection.cursor()
+    query_statement = 'SELECT * FROM product WHERE product_id=%s;'%(id)
+    cursor.execute(query_statement)
+    result = cursor.fetchall()
+    data = load_data(cursor, result)
+    return data
+
+
+@app.route('/search/<query>', methods=['POST'])
+def search(query):
+    cursor = mysql.connection.cursor()
+    query_statement = 'SELECT * FROM product;'
+    cursor.execute(query_statement)
+    result = cursor.fetchall()
+    data = load_data(cursor, result)
+
+    response = []
+    for row in dictify(data):
+        if re.findall(query, row['name'], flags=re.IGNORECASE):
+            response.append(row)
+
+    return response
 
 
 @app.route('/register', methods = ['POST'])
@@ -79,57 +216,6 @@ def login():
     
     # Should check if validation has an element, if it does, allow login
     return status
-
-
-@app.route('/home', methods=['GET'])
-def home():
-    cursor = mysql.connection.cursor()
-    query_statement = "SELECT * FROM product ORDER BY date_added DESC LIMIT 85, 5;"
-    cursor.execute(query_statement)
-    result = cursor.fetchall()
-    data = load_data(cursor, result)
-    cursor.close()
-
-    return data
-    
-
-@app.route('/product/<id>', methods=['GET'])
-def product(id):
-    cursor = mysql.connection.cursor()
-    query_statement = 'SELECT * FROM product WHERE product_id=%s;'%(id)
-    cursor.execute(query_statement)
-    result = cursor.fetchall()
-    data = load_data(cursor, result)
-    return data
-
-
-@app.route('/category/<category>')
-def category(category):
-    '''
-    accessories, tablets, mobiles, speakers, tv, parts, adapters, storage, 
-    '''
-    cursor = mysql.connection.cursor()
-    query_statement = 'SELECT * FROM product WHERE product_id=%s;'%(id)
-    cursor.execute(query_statement)
-    result = cursor.fetchall()
-    data = load_data(cursor, result)
-    return data
-
-
-@app.route('/search/<query>', methods=['POST'])
-def search(query):
-    cursor = mysql.connection.cursor()
-    query_statement = 'SELECT * FROM product;'
-    cursor.execute(query_statement)
-    result = cursor.fetchall()
-    data = load_data(cursor, result)
-
-    response = []
-    for row in dictify(data):
-        if re.findall(query, row['name'], flags=re.IGNORECASE):
-            response.append(row)
-
-    return response
 
 
 
